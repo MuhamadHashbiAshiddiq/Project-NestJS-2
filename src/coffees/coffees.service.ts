@@ -1,5 +1,7 @@
-import { Injectable, NotFoundException, Scope } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import coffeesConfig from './config/coffees.config';
+
+import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { Connection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
@@ -17,13 +19,10 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
-    private readonly configService: ConfigService,
+    @Inject(coffeesConfig.KEY)
+    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
   ) {
-    const databaseHost = this.configService.get<string>(
-      'database.host',
-      'localhost',
-    );
-    console.log(databaseHost);
+    console.log(coffeesConfiguration.foo);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
