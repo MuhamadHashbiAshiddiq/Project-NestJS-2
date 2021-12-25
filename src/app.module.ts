@@ -2,14 +2,17 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-// import { DatabaseModule } from './database/database.module';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { CoffeesModule } from './coffees/coffees.module';
 import { ConfigModule } from '@nestjs/config';
 
+// import { DatabaseModule } from './database/database.module';
+
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      ignoreEnvFile: true,
+    }),
     CoffeesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
