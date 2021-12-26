@@ -12,29 +12,28 @@ import {
   // SetMetadata,
   ValidationPipe,
 } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
+import { Public } from 'src/common/decorators/public.decorator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
-import { Request } from 'express';
-import { Public } from 'src/common/decorators/public.decorator';
+
+// import { REQUEST } from '@nestjs/core';
+// import { Request } from 'express';
 
 @Controller('coffees')
 export class CoffeesController {
-  constructor(
-    private readonly coffeesService: CoffeesService,
-    @Inject(REQUEST) private readonly request: Request,
-  ) {
-    console.log('CoffeesController created');
-  }
+  constructor(private readonly coffeesService: CoffeesService) {}
 
   // @UsePipes(ValidationPipe)
   // @SetMetadata('isPublic', true)
   @Public()
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
     // const { limit, offset } = paginationQuery;
+
     return this.coffeesService.findAll(paginationQuery);
   }
 

@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 import { WrapResponseInterceptor } from './common/interceptors/wrap-response.interceptor';
 
 // import { ApiKeyGuard } from './common/guards/api-key.guard';
@@ -18,7 +19,10 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalInterceptors(new WrapResponseInterceptor());
+  app.useGlobalInterceptors(
+    new WrapResponseInterceptor(),
+    new TimeoutInterceptor(),
+  );
   // app.useGlobalGuards(new ApiKeyGuard());
 
   await app.listen(3000);
