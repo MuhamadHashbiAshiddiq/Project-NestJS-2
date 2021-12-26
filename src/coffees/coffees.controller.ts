@@ -8,7 +8,8 @@ import {
   Patch,
   Post,
   Query,
-  UsePipes,
+  // UsePipes,
+  // SetMetadata,
   ValidationPipe,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
@@ -17,6 +18,7 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Request } from 'express';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -27,7 +29,9 @@ export class CoffeesController {
     console.log('CoffeesController created');
   }
 
-  @UsePipes(ValidationPipe)
+  // @UsePipes(ValidationPipe)
+  // @SetMetadata('isPublic', true)
+  @Public()
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     // const { limit, offset } = paginationQuery;

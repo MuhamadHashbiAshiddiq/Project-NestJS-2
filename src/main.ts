@@ -1,8 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ApiKeyGuard } from './common/guards/api-key.guard';
 
+// import { ApiKeyGuard } from './common/guards/api-key.guard';
 // import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
@@ -17,7 +17,7 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalGuards(new ApiKeyGuard());
   await app.listen(3000);
+  // app.useGlobalGuards(new ApiKeyGuard());
 }
 bootstrap();

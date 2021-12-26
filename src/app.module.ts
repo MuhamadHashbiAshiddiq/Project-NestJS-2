@@ -9,6 +9,7 @@ import { CoffeesModule } from './coffees/coffees.module';
 // import appConfig from './config/app.config';
 // import * as Joi from '@hapi/joi';
 // import { DatabaseModule } from './database/database.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CoffeesModule } from './coffees/coffees.module';
     ConfigModule.forRoot(),
     CoffeesModule,
     CoffeeRatingModule,
+    CommonModule,
     // DatabaseModule,
   ],
   controllers: [AppController],
