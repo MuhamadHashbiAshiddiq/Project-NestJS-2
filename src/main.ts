@@ -1,9 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
-import { WrapResponseInterceptor } from './common/interceptors/wrap-response.interceptor';
 
+// import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
+// import { WrapResponseInterceptor } from './common/interceptors/wrap-response.interceptor';
 // import { ApiKeyGuard } from './common/guards/api-key.guard';
 // import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
@@ -19,11 +20,20 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalInterceptors(
-    new WrapResponseInterceptor(),
-    new TimeoutInterceptor(),
-  );
+
+  // app.useGlobalInterceptors(
+  //   new WrapResponseInterceptor(),
+  //   new TimeoutInterceptor(),
+  // );
   // app.useGlobalGuards(new ApiKeyGuard());
+
+  const options = new DocumentBuilder()
+    .setTitle('ILoveCoffee')
+    .setDescription('Coffee application')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }
